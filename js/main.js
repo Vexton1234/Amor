@@ -704,7 +704,12 @@
       if (!encoded) {
         try { encoded = window.sessionStorage.getItem(LETTER_KEY); } catch (_) { /* sem sessão */ }
       }
-      if (encoded) data = decodeData(encoded);
+      /* Carta salva (js/carta-salva.js): quando existe, é sempre ela que
+         abre, com os textos e as fotos já guardados no site. */
+      if (window.ProjetoAmorCartaSalva && typeof window.ProjetoAmorCartaSalva === "object") {
+        data = window.ProjetoAmorCartaSalva;
+        encoded = null;
+      } else if (encoded) data = decodeData(encoded);
     } catch (error) {
       console.warn("Não foi possível ler os dados da carta.", error);
     }
