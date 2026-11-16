@@ -1,0 +1,197 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100b1d">
+  <title>Projeto Amor — Crie uma carta inesquecível</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/particulas.js" defer></script>
+  <!-- link-codec.js ANTES de main.js: o editor e a carta usam o mesmo
+       módulo para codificar e decodificar o link. -->
+  <script src="js/link-codec.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body class="editor-page">
+  
+  </div>
+  <canvas class="particle-canvas" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Projeto Amor, início">
+      <span class="brand-mark">♡</span><span>projeto <b>amor</b></span>
+    </a>
+    <div class="topbar-note"><span class="status-dot"></span> Um presente feito com sentimento</div>
+  </header>
+
+  <main class="editor-shell">
+    <section class="intro">
+      <p class="eyebrow"><span></span> UMA EXPERIÊNCIA SÓ SUA</p>
+      <h1>Transforme seus sentimentos<br>em algo <em>inesquecível.</em></h1>
+      <p class="intro-copy">Escreva o que o coração sente. Nós transformamos suas palavras em uma carta que merece ser aberta devagar.</p>
+    </section>
+
+    <div class="workspace">
+      <section class="form-panel panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">01 / SUA MENSAGEM</p><h2>Escreva sua carta</h2></div>
+          <span class="step-icon">✦</span>
+        </div>
+
+        <form id="letter-form">
+          <label class="field">
+            <span>Nome de quem vai receber</span>
+            <input id="recipient" name="recipient" maxlength="70" placeholder="Ex.: Meu amor, Ana..." autocomplete="off">
+          </label>
+          <label class="field">
+            <span>Mensagem principal <small>O que você gostaria que essa pessoa soubesse?</small></span>
+            <textarea id="message" name="message" rows="5" maxlength="1800" placeholder="Às vezes, as palavras parecem pequenas para explicar tudo o que sinto..."></textarea>
+          </label>
+          <label class="field">
+            <span>O que mais amo em você</span>
+            <textarea id="favorite" name="favorite" rows="3" maxlength="700" placeholder="Seu jeito de sorrir, a paz que você me traz..."></textarea>
+          </label>
+          <label class="field">
+            <span>Nossa história</span>
+            <textarea id="story" name="story" rows="3" maxlength="900" placeholder="Uma lembrança que sempre vou guardar..."></textarea>
+          </label>
+
+          <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+               TRÃŠS PROMESSAS â€” Etapa 03
+               Campos opcionais. O que for escrito aqui vira os trÃªs
+               cartÃµes da carta; o que ficar vazio simplesmente nÃ£o cria
+               cartÃ£o. Nada Ã© inventado pelo site: os textos sÃ£o sempre os
+               da pessoa, e o formato do link nÃ£o muda (a lista entra em
+               `promisses`/`promises`, campo novo e opcional).
+               â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+          <div class="field promises-field">
+            <span>Se eu pudesse te prometer três coisas <small>Se preencher, cada uma vira um cartão fechado na carta, que se abre com um toque.</small></span>
+            <div class="promise-inputs">
+              <label class="field promise-input">
+                <span class="promise-input-label">Primeira promessa</span>
+                <textarea id="promise-1" name="promise1" rows="2" maxlength="240" placeholder="Ex.: Estar presente nos dias difíceis."></textarea>
+              </label>
+              <label class="field promise-input">
+                <span class="promise-input-label">Segunda promessa</span>
+                <textarea id="promise-2" name="promise2" rows="2" maxlength="240" placeholder="Ex.: Ouvir com carinho e compreensão."></textarea>
+              </label>
+              <label class="field promise-input">
+                <span class="promise-input-label">Terceira promessa</span>
+                <textarea id="promise-3" name="promise3" rows="2" maxlength="240" placeholder="Ex.: Continuar escolhendo a relação todos os dias."></textarea>
+              </label>
+            </div>
+          </div>
+
+          <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+               NOSSAS FOTOS â€” atÃ© 6 imagens do casal.
+               As fotos sÃ£o redimensionadas no navegador e guardadas
+               dentro do prÃ³prio link (sem servidor). Nada Ã© enviado para
+               lugar nenhum: tudo viaja codificado na URL.
+               â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+          <div class="field photo-field">
+            <span>Nossas Fotos <small>Até 6 fotos de vocês. Elas aparecem no carrossel 3D.</small></span>
+            <div class="photo-grid" id="photo-grid">
+              <div class="photo-slot" data-slot="0">
+                <label class="photo-pick">
+                  <input type="file" accept="image/*" class="photo-input" hidden>
+                  <span class="photo-empty"><b class="photo-plus">+</b><i class="photo-label">Foto 1</i></span>
+                  <img class="photo-preview" alt="" hidden>
+                </label>
+                <button type="button" class="photo-remove" aria-label="Remover foto 1" hidden>×</button>
+              </div>
+              <div class="photo-slot" data-slot="1">
+                <label class="photo-pick">
+                  <input type="file" accept="image/*" class="photo-input" hidden>
+                  <span class="photo-empty"><b class="photo-plus">+</b><i class="photo-label">Foto 2</i></span>
+                  <img class="photo-preview" alt="" hidden>
+                </label>
+                <button type="button" class="photo-remove" aria-label="Remover foto 2" hidden>×</button>
+              </div>
+              <div class="photo-slot" data-slot="2">
+                <label class="photo-pick">
+                  <input type="file" accept="image/*" class="photo-input" hidden>
+                  <span class="photo-empty"><b class="photo-plus">+</b><i class="photo-label">Foto 3</i></span>
+                  <img class="photo-preview" alt="" hidden>
+                </label>
+                <button type="button" class="photo-remove" aria-label="Remover foto 3" hidden>×</button>
+              </div>
+              <div class="photo-slot" data-slot="3">
+                <label class="photo-pick">
+                  <input type="file" accept="image/*" class="photo-input" hidden>
+                  <span class="photo-empty"><b class="photo-plus">+</b><i class="photo-label">Foto 4</i></span>
+                  <img class="photo-preview" alt="" hidden>
+                </label>
+                <button type="button" class="photo-remove" aria-label="Remover foto 4" hidden>×</button>
+              </div>
+              <div class="photo-slot" data-slot="4">
+                <label class="photo-pick">
+                  <input type="file" accept="image/*" class="photo-input" hidden>
+                  <span class="photo-empty"><b class="photo-plus">+</b><i class="photo-label">Foto 5</i></span>
+                  <img class="photo-preview" alt="" hidden>
+                </label>
+                <button type="button" class="photo-remove" aria-label="Remover foto 5" hidden>×</button>
+              </div>
+              <div class="photo-slot" data-slot="5">
+                <label class="photo-pick">
+                  <input type="file" accept="image/*" class="photo-input" hidden>
+                  <span class="photo-empty"><b class="photo-plus">+</b><i class="photo-label">Foto 6</i></span>
+                  <img class="photo-preview" alt="" hidden>
+                </label>
+                <button type="button" class="photo-remove" aria-label="Remover foto 6" hidden>×</button>
+              </div>
+            </div>
+            <p class="photo-note" id="photo-note">Toque em um espaço para escolher uma foto. Você pode trocar ou remover quando quiser.</p>
+          </div>
+          <label class="field">
+            <span>Assinado com amor,</span>
+            <input id="sender" name="sender" maxlength="70" placeholder="Seu nome ou apelido">
+          </label>
+          <div class="form-footer">
+            <span class="privacy-note"><span class="lock-icon">🔒</span> Suas palavras são o centro de tudo.</span>
+            <button class="primary-button" type="submit">Criar minha carta <span>↑</span></button>
+          </div>
+          <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <aside class="preview-column">
+        <div class="preview-heading"><div><p class="eyebrow">02 / PRÉ-VISUALIZAÇÃO</p><h2>Um pedacinho do que vem aí</h2></div><span class="live-pill"><i></i> AO VIVO</span></div>
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="phone-island"></div>
+            <div class="phone-screen">
+              <div class="preview-stars" aria-hidden="true">✦  ·  ✧  ·</div>
+              <div class="preview-card">
+                <div class="preview-heart">♡</div>
+                <p class="preview-kicker">UMA CARTA PARA</p>
+                <h3 id="preview-recipient">Meu amor</h3>
+                <div class="gold-rule"></div>
+                <p id="preview-message" class="preview-message">Existem sentimentos que merecem mais do que uma mensagem. Merecem um momento só deles.</p>
+                <p class="preview-signature" id="preview-sender">Com amor, sempre.</p>
+              </div>
+              <div class="preview-bottom">FEITO COM <span>♥</span> E CARINHO</div>
+            </div>
+          </div>
+          <p class="preview-caption">A carta completa ganha vida na próxima tela.</p>
+        </div>
+        <div class="preview-tip"><span>✧</span><p><b>Um pequeno detalhe:</b> não precisa escrever algo perfeito. Escreva algo verdadeiro.</p></div>
+      </aside>
+    </div>
+    <footer class="site-footer">PROJETO AMOR <span>·</span> FEITO PARA DIZER O QUE IMPORTA</footer>
+  </main>
+
+  <!-- SÃ³ aparece quando o sistema pede movimento reduzido: permite ver as
+       pÃ©talas, as estrelas e os brilhos mesmo assim. Escolha persistida. -->
+  <div class="motion-toggle-wrap">
+    <button id="motion-toggle" class="motion-toggle" type="button" hidden aria-pressed="false">
+      <span class="motion-toggle-dot" aria-hidden="true"></span>
+      <span class="motion-toggle-label">Ver tudo se animando</span>
+    </button>
+  </div>
+</body>
+</html>
+

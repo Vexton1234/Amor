@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Cena entardecer">
+<defs>
+<linearGradient id="g0" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#2b0f2c"/><stop offset="55%" stop-color="#7d2a45"/><stop offset="100%" stop-color="#e8825c"/>
+</linearGradient>
+<radialGradient id="vg0" cx="0.5" cy="0.45" r="0.75">
+<stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
+</radialGradient>
+</defs>
+<rect width="520" height="340" fill="url(#g0)"/>
+
+<path d="M0 300 L90 214 L150 268 L232 186 L320 274 L420 214 L520 300 Z" fill="#120a1c" opacity="0.92"/>
+              <path d="M0 300 L110 246 L210 292 L330 240 L440 288 L520 300 Z" fill="#0a0512" opacity="0.96"/>
+<rect width="520" height="340" fill="url(#vg0)"/>
+</svg>

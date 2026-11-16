@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Cena bosque-nebuloso">
+<defs>
+<linearGradient id="g7" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#0c0a1e"/><stop offset="55%" stop-color="#241a44"/><stop offset="100%" stop-color="#4a2c66"/>
+</linearGradient>
+<radialGradient id="vg7" cx="0.5" cy="0.45" r="0.75">
+<stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
+</radialGradient>
+</defs>
+<rect width="520" height="340" fill="url(#g7)"/>
+<ellipse cx="180" cy="270" rx="240" ry="46" fill="#c4a8f0" opacity="0.10"/>
+      <ellipse cx="400" cy="250" rx="200" ry="40" fill="#c4a8f0" opacity="0.08"/>
+<path d="M0 300 h520 v40 h-520 Z" fill="#0d0718" opacity="0.94"/><path d="M30 302 l -20 0 l 20 -108 l 20 0 Z" fill="#150a20" opacity="0.98"/><path d="M80 302 l -20 0 l 20 -118 l 20 0 Z" fill="#150a20" opacity="0.80"/><path d="M126 302 l -20 0 l 20 -96 l 20 0 Z" fill="#150a20" opacity="0.77"/><path d="M163 302 l -20 0 l 20 -85 l 20 0 Z" fill="#150a20" opacity="0.91"/><path d="M217 302 l -20 0 l 20 -83 l 20 0 Z" fill="#150a20" opacity="0.94"/><path d="M263 302 l -20 0 l 20 -134 l 20 0 Z" fill="#150a20" opacity="0.75"/><path d="M314 302 l -20 0 l 20 -139 l 20 0 Z" fill="#150a20" opacity="0.93"/><path d="M367 302 l -20 0 l 20 -134 l 20 0 Z" fill="#150a20" opacity="0.87"/><path d="M412 302 l -20 0 l 20 -94 l 20 0 Z" fill="#150a20" opacity="0.87"/><path d="M455 302 l -20 0 l 20 -148 l 20 0 Z" fill="#150a20" opacity="0.81"/><path d="M508 302 l -20 0 l 20 -124 l 20 0 Z" fill="#150a20" opacity="0.93"/>
+<rect width="520" height="340" fill="url(#vg7)"/>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Cena passaros">
+<defs>
+<linearGradient id="g9" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#1e1130"/><stop offset="55%" stop-color="#3d2050"/><stop offset="100%" stop-color="#a05a72"/>
+</linearGradient>
+<radialGradient id="vg9" cx="0.5" cy="0.45" r="0.75">
+<stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
+</radialGradient>
+</defs>
+<rect width="520" height="340" fill="url(#g9)"/>
+<circle cx="12.1" cy="129.0" r="1.20" fill="#fff4fc" opacity="0.41"/><circle cx="502.7" cy="77.0" r="1.49" fill="#fff4fc" opacity="0.41"/><circle cx="106.1" cy="129.2" r="0.85" fill="#fff4fc" opacity="0.79"/><circle cx="22.3" cy="129.2" r="0.70" fill="#fff4fc" opacity="0.51"/><circle cx="172.8" cy="118.0" r="1.41" fill="#fff4fc" opacity="0.65"/><circle cx="131.6" cy="2.8" r="1.83" fill="#fff4fc" opacity="0.47"/><circle cx="41.7" cy="80.7" r="1.70" fill="#fff4fc" opacity="0.43"/><circle cx="157.7" cy="48.1" r="0.89" fill="#fff4fc" opacity="0.51"/><circle cx="389.9" cy="42.3" r="1.88" fill="#fff4fc" opacity="0.27"/><circle cx="311.8" cy="14.9" r="1.30" fill="#fff4fc" opacity="0.64"/><circle cx="224.2" cy="75.3" r="1.57" fill="#fff4fc" opacity="0.33"/><circle cx="358.8" cy="132.1" r="0.82" fill="#fff4fc" opacity="0.92"/><circle cx="116.1" cy="1.6" r="1.79" fill="#fff4fc" opacity="0.79"/><circle cx="397.5" cy="61.4" r="1.75" fill="#fff4fc" opacity="0.67"/><circle cx="268.8" cy="47.5" r="1.75" fill="#fff4fc" opacity="0.53"/><circle cx="114.4" cy="64.3" r="1.06" fill="#fff4fc" opacity="0.59"/><circle cx="177.5" cy="73.5" r="0.97" fill="#fff4fc" opacity="0.32"/><circle cx="149.7" cy="43.7" r="0.80" fill="#fff4fc" opacity="0.31"/><circle cx="400.9" cy="36.4" r="0.80" fill="#fff4fc" opacity="0.56"/><circle cx="375.8" cy="98.3" r="1.39" fill="#fff4fc" opacity="0.26"/><circle cx="206.6" cy="7.0" r="0.71" fill="#fff4fc" opacity="0.73"/><circle cx="288.4" cy="71.0" r="1.72" fill="#fff4fc" opacity="0.30"/><circle cx="448.0" cy="19.4" r="1.48" fill="#fff4fc" opacity="0.35"/><circle cx="470.1" cy="51.9" r="1.65" fill="#fff4fc" opacity="0.68"/><circle cx="234.3" cy="36.3" r="1.67" fill="#fff4fc" opacity="0.93"/><circle cx="445.9" cy="13.5" r="0.77" fill="#fff4fc" opacity="0.42"/><path d="M120 70 q 10 -9 20 0 q 10 -9 20 0" fill="none" stroke="#f6dcec" stroke-width="2.4" opacity="0.6" stroke-linecap="round"/><path d="M172 88 q 10 -9 20 0 q 10 -9 20 0" fill="none" stroke="#f6dcec" stroke-width="2.4" opacity="0.6" stroke-linecap="round"/><path d="M224 106 q 10 -9 20 0 q 10 -9 20 0" fill="none" stroke="#f6dcec" stroke-width="2.4" opacity="0.6" stroke-linecap="round"/><path d="M276 124 q 10 -9 20 0 q 10 -9 20 0" fill="none" stroke="#f6dcec" stroke-width="2.4" opacity="0.6" stroke-linecap="round"/>
+<path d="M0 268 Q130 222 260 262 T520 252 L520 340 L0 340 Z" fill="#0d0720" opacity="0.9"/>
+              <path d="M0 300 Q160 268 300 298 T520 292 L520 340 L0 340 Z" fill="#07040f" opacity="0.95"/>
+<rect width="520" height="340" fill="url(#vg9)"/>
+</svg>

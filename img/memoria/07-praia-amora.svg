@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" width="520" height="340" role="img" aria-label="Cena praia-amora">
+<defs>
+<linearGradient id="g6" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#170d26"/><stop offset="55%" stop-color="#4a2444"/><stop offset="100%" stop-color="#c07a6a"/>
+</linearGradient>
+<radialGradient id="vg6" cx="0.5" cy="0.45" r="0.75">
+<stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
+</radialGradient>
+</defs>
+<rect width="520" height="340" fill="url(#g6)"/>
+<circle cx="424.4" cy="10.1" r="1.78" fill="#fff4fc" opacity="0.83"/><circle cx="378.5" cy="25.6" r="1.27" fill="#fff4fc" opacity="0.38"/><circle cx="342.4" cy="16.7" r="0.61" fill="#fff4fc" opacity="0.74"/><circle cx="390.2" cy="82.9" r="1.66" fill="#fff4fc" opacity="0.50"/><circle cx="440.8" cy="102.1" r="0.71" fill="#fff4fc" opacity="0.48"/><circle cx="51.8" cy="125.4" r="0.75" fill="#fff4fc" opacity="0.75"/><circle cx="32.5" cy="65.9" r="1.38" fill="#fff4fc" opacity="0.85"/><circle cx="324.8" cy="120.1" r="1.33" fill="#fff4fc" opacity="0.34"/><circle cx="175.0" cy="33.1" r="1.26" fill="#fff4fc" opacity="0.44"/><circle cx="505.1" cy="114.7" r="0.70" fill="#fff4fc" opacity="0.77"/><circle cx="205.6" cy="89.3" r="1.50" fill="#fff4fc" opacity="0.75"/><circle cx="39.7" cy="16.6" r="1.90" fill="#fff4fc" opacity="0.62"/><circle cx="419.7" cy="134.2" r="1.87" fill="#fff4fc" opacity="0.87"/><circle cx="246.3" cy="11.4" r="1.48" fill="#fff4fc" opacity="0.26"/><circle cx="491.5" cy="94.0" r="1.86" fill="#fff4fc" opacity="0.64"/><circle cx="215.3" cy="79.5" r="1.66" fill="#fff4fc" opacity="0.28"/><circle cx="397.4" cy="72.8" r="0.76" fill="#fff4fc" opacity="0.30"/><circle cx="414.2" cy="11.7" r="2.05" fill="#fff4fc" opacity="0.66"/><circle cx="201.6" cy="22.4" r="1.15" fill="#fff4fc" opacity="0.92"/><circle cx="474.5" cy="63.8" r="0.73" fill="#fff4fc" opacity="0.68"/><circle cx="264.0" cy="51.2" r="0.94" fill="#fff4fc" opacity="0.64"/><circle cx="1.3" cy="9.1" r="1.93" fill="#fff4fc" opacity="0.26"/>
+<path d="M0 262 Q130 246 260 262 T520 262" fill="none" stroke="#c9a0a8" stroke-width="2" opacity="0.30"/><path d="M0 277 Q130 261 260 277 T520 277" fill="none" stroke="#c9a0a8" stroke-width="2" opacity="0.24"/><path d="M0 292 Q130 276 260 292 T520 292" fill="none" stroke="#c9a0a8" stroke-width="2" opacity="0.18"/><path d="M0 307 Q130 291 260 307 T520 307" fill="none" stroke="#c9a0a8" stroke-width="2" opacity="0.12"/>
+<rect width="520" height="340" fill="url(#vg6)"/>
+</svg>

@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100b1d">
+  <title>Uma carta para você — Projeto Amor</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/particulas.js" defer></script>
+  <script src="js/loading.js" defer></script>
+  <!-- ORDEM IMPORTA: main.js é carregado por último, DEPOIS de galeria.js
+     e surpresa.js. Por isso nenhum destes módulos pode capturar
+     window.ProjetoAmorCarta no topo: ele ainda não existe quando eles
+     rodam. A ponte é resolvida na hora da chamada, nunca guardada. -->
+  <!-- O fundo da surpresa agora é 100% CSS: o antigo canvas de bokeh
+     (js/luzes.js) não é mais carregado nesta página. -->
+  <!-- galeria.js ANTES de main.js: main.js registra o botão da galeria
+     ao carregar e precisa que a API já exista. Os dois usam defer,
+     então a ordem acima é a ordem de execução. -->
+  <script src="js/galeria.js" defer></script>
+  <!-- fotos.js ANTES de surpresa.js e main.js: a página exclusiva das
+     fotografias é aberta pela surpresa quando a última carta termina,
+     e main.js propaga a decisão de movimento para ela. -->
+  <script src="js/fotos.js" defer></script>
+  <!-- surpresa.js ANTES de main.js, pela mesma razão de galeria.js:
+     main.js registra o botão da surpresa ao carregar. -->
+  <script src="js/surpresa.js" defer></script>
+  <!-- promessas.js ANTES de main.js: main.js entrega os textos do link
+     ao carregar e precisa que a API já exista. -->
+  <script src="js/promessas.js" defer></script>
+  <!-- link-codec.js ANTES de main.js: é quem decodifica a carta do
+     link. Sem ele, a carta não abre. -->
+  <script src="js/link-codec.js" defer></script>
+  <!-- aniversario.js ANTES de main.js: main.js registra o botão de
+     lançamento e precisa que a API já exista. -->
+  <script src="js/aniversario.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body class="letter-page is-loading">
+  <!-- Pétalas de rosa globais (js/particulas.js). As cenas com fundo
+       opaco próprio — surpresa, fotos e aniversário — cobrem esta
+       camada, então cada uma mantém o seu fundo. -->
+  <canvas class="particle-canvas" aria-hidden="true"></canvas>
+  <header class="letter-topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">♡</span><span>projeto <b>amor</b></span></a>
+    <span class="topbar-note">UM MOMENTO SÓ SEU</span>
+  </header>
+
+  <main class="experience">
+    <section id="opening-scene" class="opening-scene">
+      <p class="eyebrow"><span></span> ALGO ESPECIAL ESPERA POR VOCÊS <span></span></p>
+      <h1>Feita <em>para você.</em></h1>
+      <p class="opening-subtitle">Respire fundo. Esta mensagem vem de alguém que pensou em você.</p>
+
+      <button id="envelope-button" class="envelope-button" type="button" aria-label="Abrir envelope de amor" aria-expanded="false">
+        <span class="envelope-aura"></span>
+        <span class="envelope" aria-hidden="true">
+          <span class="envelope-back"></span>
+          <span class="letter-peek"><span>Com carinho,</span><i>♡</i></span>
+          <span class="envelope-front"></span>
+          <span class="envelope-flap"></span>
+          <span class="wax-seal"><span>♡</span></span>
+          <span class="envelope-sparkle sparkle-one">✦</span>
+          <span class="envelope-sparkle sparkle-two">✧</span>
+        </span>
+        <span class="open-prompt">TOQUE PARA ABRIR <span>↗</span></span>
+      </button>
+      <p class="small-hint">Cada palavra foi escolhida com carinho.</p>
+    </section>
+
+    <section id="letter-content" class="letter-content" hidden aria-live="polite">
+      <div class="letter-topline"><span>UMA MENSAGEM DO CORAÇÃO</span><span>♡</span></div>
+      <article class="paper">
+        <div class="paper-corner corner-one">✧</div><div class="paper-corner corner-two">✧</div>
+        <p class="paper-kicker">PARA ALGUÉM MUITO ESPECIAL</p>
+        <h2 id="letter-recipient" class="script-title"></h2>
+        <div class="paper-divider"><span>✦</span></div>
+        <p id="letter-message" class="letter-paragraph"></p>
+        <section id="favorite-section" class="letter-block" hidden>
+          <h3>O que amo em você</h3><p id="letter-favorite"></p>
+        </section>
+        <section id="story-section" class="letter-block" hidden>
+          <h3>Um pedaço da nossa história</h3><p id="letter-story"></p>
+        </section>
+        <!-- ═════════════════════════════════════════════════════════════════════════════════════════════════════════
+             TRÊS PROMESSAS — cartões fechados que se abrem no toque.
+             Vive dentro do papel da carta e usa a mesma tipografia dos
+             outros blocos; os textos são os que o editor gravou no link.
+             Cartas antigas (sem `promises`) simplesmente não mostram esta
+             seção — nenhum erro, nenhum espaço vazio.
+             ═══════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+        <section id="promises-section" class="letter-block promises-block" hidden>
+          <h3>Se eu pudesse te prometer três coisas</h3>
+          <p class="promises-lead">Cada cartão se abre sozinho, no seu tempo.</p>
+          <div class="promise-cards" id="promise-cards">
+            <button class="promise-card" type="button" data-promise-slot="0" aria-expanded="false">
+              <span class="promise-index">I</span>
+              <span class="promise-body">
+                <span class="promise-text"></span>
+                <span class="promise-veil" aria-hidden="true"></span>
+              </span>
+              <span class="promise-cue" aria-hidden="true">abrir</span>
+            </button>
+            <button class="promise-card" type="button" data-promise-slot="1" aria-expanded="false">
+              <span class="promise-index">II</span>
+              <span class="promise-body">
+                <span class="promise-text"></span>
+                <span class="promise-veil" aria-hidden="true"></span>
+              </span>
+              <span class="promise-cue" aria-hidden="true">abrir</span>
+            </button>
+            <button class="promise-card" type="button" data-promise-slot="2" aria-expanded="false">
+              <span class="promise-index">III</span>
+              <span class="promise-body">
+                <span class="promise-text"></span>
+                <span class="promise-veil" aria-hidden="true"></span>
+              </span>
+              <span class="promise-cue" aria-hidden="true">abrir</span>
+            </button>
+          </div>
+        </section>
+        <div class="paper-signoff"><span>Com todo o meu carinho,</span><strong id="letter-sender"></strong><span class="signature-heart">♡</span></div>
+      </article>
+      <!-- NOTA FINAL — o fecho da carta. Nasce escondida: entra só
+           quando a leitura termina (ou na hora, se o leitor pular a
+           digitação ou se o movimento estiver reduzido). Ver
+           revealClosingNote em js/main.js. -->
+      <p class="closing-note" hidden>Algumas palavras acabam. O sentimento, não.</p>
+      <!-- Entrada da galeria: só aparece quando existe ao menos uma foto.
+           A seção em si decide isso e remove o botão quando não há. -->
+      <button id="gallery-button" class="secondary-button gallery-launch" type="button" hidden>✦ Reviver nossos momentos</button>
+      <!-- Entrada da Etapa 4. Só aparece quando NÃO existe galeria: com
+           fotos, a surpresa vem depois da galeria (botão na própria cena). -->
+      <button id="surprise-button" class="secondary-button gallery-launch" type="button" hidden>✦ Abrir quando estiver com saudades</button>
+      <button id="replay-button" class="secondary-button" type="button">♡ Ler novamente</button>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════════════════════════════════
+         GALERIA CINEMATOGRÁFICA
+         Etapa opcional, depois da leitura. Usa exatamente as mesmas
+         fotos que o editor já guardou no link (data URLs) — nenhum
+         upload novo, nenhum formato novo. Vive fora de #experience?
+         Não: dentro dele, como o envelope e a galeria, para que trocar
+         de seção seja apenas ocultar e mostrar.
+         ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+    <!-- tabindex="-1": a cena é focável por script (não por Tab) para
+         assumir o foco quando entra e sair do nada quando o foco fica
+         preso no botão escondido. -->
+    <section id="gallery-scene" class="gallery-scene" hidden tabindex="-1" aria-label="Galeria de momentos">
+      <div class="gallery-veil" aria-hidden="true"></div>
+
+      <p class="gallery-eyebrow"><span></span> NOSSOS MOMENTOS <span></span></p>
+
+      <div class="gallery-stage" id="gallery-stage">
+        <!-- trilho: as fotos ficam lado a lado e o trilho é quem desliza -->
+        <div class="gallery-track" id="gallery-track"></div>
+
+        <button class="gallery-arrow gallery-prev" id="gallery-prev" type="button" aria-label="Foto anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+        </button>
+        <button class="gallery-arrow gallery-next" id="gallery-next" type="button" aria-label="Próxima foto">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
+        </button>
+
+        <!-- frase curta: fica abaixo da foto, nunca sobre os rostos -->
+        <p class="gallery-caption" id="gallery-caption" aria-live="polite"></p>
+      </div>
+
+      <div class="gallery-dots" id="gallery-dots" role="tablist" aria-label="Posição na galeria"></div>
+
+      <!-- Sem fotos: mensagem discreta, sem imagem quebrada nem vão vazio -->
+      <div class="gallery-empty" id="gallery-empty" hidden>
+        <p class="gallery-empty-line"></p>
+        <button class="secondary-button link-button" type="button" data-gallery-close>Voltar para a carta</button>
+      </div>
+
+      <!-- Ponte para a Etapa 4: o botão só aparece com o módulo carregado. -->
+      <button id="surprise-launch" class="surprise-launch" type="button" hidden>✦ Abrir quando estiver com saudades</button>
+
+      <button class="gallery-back" type="button" data-gallery-close>← Voltar para a carta</button>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════════════════════════════════════
+         ENVELOPE SURPRESA — ETAPA 4
+         Vem depois da galeria (ou depois da carta, quando não há
+         fotos). Vive dentro de #experience como o envelope e a galeria:
+         trocar de etapa é ocultar e mostrar, sem recarregar nada.
+         ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+    <section id="surprise-scene" class="surprise-scene" hidden tabindex="-1" aria-label="Uma surpresa para você">
+      <!-- FUNDO EXCLUSIVO DESTA ABA — branco-gelo, duas ondas em cinza
+           muito claro e corações 2D pendurados por fios finos.
+           Fica fixo atrás do conteúdo, é decorativo (aria-hidden) e
+           nunca captura cliques (pointer-events: none). -->
+      <div class="surprise-fundo" aria-hidden="true">
+        <div class="surprise-ondas">
+          <svg class="surprise-onda surprise-onda-tras" viewBox="0 0 1440 320" preserveAspectRatio="none" focusable="false">
+            <path d="M0,196 C180,132 360,248 540,216 C720,184 900,92 1080,136 C1260,180 1350,244 1440,212 L1440,320 L0,320 Z"></path>
+          </svg>
+          <svg class="surprise-onda surprise-onda-frente" viewBox="0 0 1440 320" preserveAspectRatio="none" focusable="false">
+            <path d="M0,232 C200,168 380,276 560,244 C740,212 920,148 1100,196 C1260,236 1360,284 1440,252 L1440,320 L0,320 Z"></path>
+          </svg>
+        </div>
+
+        <div class="surprise-coroes">
+          <span class="surprise-coracao" style="--top: 3%; --left: 5%; --s: 34px; --fio: 38px; --dur: 6.2s; --delay: -0.4s; --giro: 5deg; color: #e05a6a;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 6%; --left: 13%; --s: 26px; --fio: 22px; --dur: 7.4s; --delay: -2.1s; --giro: 4deg; color: #f3a7bd;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 2%; --left: 22%; --s: 38px; --fio: 52px; --dur: 5.8s; --delay: -1.2s; --giro: 6deg; color: #a9d4ef;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 7%; --left: 31%; --s: 30px; --fio: 30px; --dur: 8.2s; --delay: -3.3s; --giro: 4.5deg; color: #f6c9d8;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 4%; --left: 40%; --s: 24px; --fio: 18px; --dur: 6.8s; --delay: -0.8s; --giro: 5.5deg; color: #c7dff2;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 9%; --left: 49%; --s: 36px; --fio: 44px; --dur: 7.8s; --delay: -4.1s; --giro: 4deg; color: #e8798a;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 3%; --left: 58%; --s: 28px; --fio: 26px; --dur: 6.4s; --delay: -1.7s; --giro: 5deg; color: #f4b7c9;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 8%; --left: 67%; --s: 40px; --fio: 56px; --dur: 5.6s; --delay: -2.8s; --giro: 6.5deg; color: #9fcdea;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 5%; --left: 76%; --s: 32px; --fio: 34px; --dur: 7.1s; --delay: -0.2s; --giro: 4.5deg; color: #f7d3de;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 2%; --left: 85%; --s: 26px; --fio: 20px; --dur: 8.6s; --delay: -3.9s; --giro: 5deg; color: #d98a9a;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 7%; --left: 92%; --s: 36px; --fio: 46px; --dur: 6.9s; --delay: -1.4s; --giro: 6deg; color: #b9d9ee;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+          <span class="surprise-coracao" style="--top: 10%; --left: 18%; --s: 22px; --fio: 16px; --dur: 7.6s; --delay: -2.4s; --giro: 4deg; color: #f2c1d1;"><span class="surprise-corda"></span><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 .81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+        </div>
+      </div>
+
+      <!-- O bloco do envelope é uma unidade só: sai inteiro (título +
+           envelope) para o papel ocupar o lugar, sem sobreposição. -->
+      <div id="surprise-intro" class="surprise-intro">
+        <p class="surprise-eyebrow"><span></span> UMA ÚLTIMA COISA <span></span></p>
+
+        <div class="surprise-headline">
+          <h2 class="surprise-title">Abra quando sentir minha falta</h2>
+          <p class="surprise-subtitle">Fechado, guardado e esperando o instante certo.</p>
+        </div>
+
+        <button id="surprise-envelope-button" class="surprise-envelope-button" type="button"
+                aria-label="Abrir o envelope surpresa" aria-expanded="false">
+          <span class="surprise-aura" aria-hidden="true"></span>
+          <span class="surprise-envelope" aria-hidden="true">
+            <span class="surprise-envelope-back"></span>
+            <span class="surprise-letter-peek"><span>Quando doer a falta,</span><i>abra</i></span>
+            <span class="surprise-envelope-front"></span>
+            <span class="surprise-envelope-flap"></span>
+            <span class="surprise-wax-seal"><span>♡</span></span>
+            <span class="surprise-sparkle sparkle-one">✦</span>
+            <span class="surprise-sparkle sparkle-two">✧</span>
+          </span>
+          <span class="open-prompt">TOQUE PARA ABRIR <span>↗</span></span>
+        </button>
+      </div>
+
+      <!-- Mensagem revelada. Reaproveita .paper e a tipografia da carta. -->
+      <article id="surprise-message" class="paper surprise-paper" hidden>
+        <div class="paper-corner corner-one">✧</div><div class="paper-corner corner-two">✧</div>
+        <p class="paper-kicker surprise-kicker">QUANDO A SAUDADE APERTAR</p>
+        <h3 id="surprise-greeting" class="script-title surprise-greeting"></h3>
+        <div class="paper-divider"><span>✦</span></div>
+
+        <p id="surprise-text-1" class="letter-paragraph"></p>
+        <p id="surprise-text-2" class="letter-paragraph"></p>
+
+        <section class="letter-block">
+          <h3>O que continua aqui</h3>
+          <p id="surprise-text-3"></p>
+        </section>
+
+        <p id="surprise-closing" class="surprise-closing"></p>
+
+        <div class="paper-signoff surprise-signoff" hidden>
+          <span>Sempre por perto, mesmo de longe,</span>
+          <strong id="surprise-sender"></strong>
+          <span class="signature-heart">♡</span>
+        </div>
+      </article>
+
+      <!-- Volta discreta: para a galeria quando ela existe, sempre para a carta. -->
+      <div class="surprise-actions">
+        <button id="surprise-back-gallery" class="surprise-back" type="button" hidden>← Voltar para a galeria</button>
+        <button id="surprise-back-letter" class="surprise-back" type="button">← Voltar para a carta</button>
+        <!-- Acesso à homenagem de aniversário: só aparece quando o módulo carregar -->
+        <button id="aniversario-launch" class="secondary-button aniversario-launch" type="button" hidden>
+          ♡ Feliz aniversário
+        </button>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════════════════════════════════════════════════
+         PÁGINA EXCLUSIVA DAS FOTOGRAFIAS — Etapa 5
+         Entra depois que a mensagem da surpresa (a última carta, na
+         experiência) termina de ser digitada. É uma camada
+         de tela cheia, visualmente independente: fundo escuro em
+         roxo/vinho/preto, pontos de luz dourada e um único
+         protagonista — o carrossel circular 3D.
+
+         As fotos são as MESMAS data URLs do editor (data.photos).
+         Sem fotos, esta seção nunca é aberta. A galeria, a carta, a
+         surpresa e o resto da jornada continuam intactos.
+         ══════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+    <section id="photos-scene" class="photos-scene" hidden tabindex="-1" aria-label="Nossas fotografias">
+      <div class="photos-atmosphere" aria-hidden="true">
+        <div class="photos-palette p0"></div>
+        <div class="photos-palette p1"></div>
+        <div class="photos-palette p2"></div>
+        <div class="photos-palette p3"></div>
+        <div class="photos-palette p4"></div>
+        <div class="photos-palette p5"></div>
+        <div class="photos-citylights" aria-hidden="true"></div>
+        <div class="photos-halo"></div>
+        <div class="photos-stars"></div>
+        <div class="photos-vignette"></div>
+      </div>
+
+      <button id="photos-back" class="photos-back" type="button" aria-label="Voltar para a mensagem">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg>
+      </button>
+
+      <header class="photos-header">
+        <p class="photos-eyebrow"><span></span> NOSSOS MOMENTOS <span></span></p>
+      </header>
+
+      <div class="photos-stage" id="photos-stage">
+        <div class="photos-ring" id="photos-ring"></div>
+        <div class="photos-reflection" aria-hidden="true"></div>
+      </div>
+
+      <p class="photos-meta">
+        <span id="photos-counter" class="photos-counter" aria-hidden="true"></span>
+        <span class="photos-sep" aria-hidden="true">·</span>
+        <span id="photos-hint" class="photos-hint">arraste para girar</span>
+      </p>
+    </section>
+
+    <section id="missing-letter" class="missing-letter" hidden>
+      <div class="missing-icon">♡</div>
+      <h2>Esta carta ainda não chegou.</h2>
+      <p>O link parece estar incompleto. Peça a quem enviou para compartilhar o link criado depois de finalizar a carta.</p>
+      <a href="index.html" class="secondary-button link-button">Criar uma carta</a>
+    </section>
+  </main>
+
+  <!-- ═════════════════════════════════════════════════════════════════════════════════════════════════════════════
+       ETAPA 6 — HOMENAGEM DE ANIVERSÁRIO
+       Cena cinematográfica independente: fundo preto profundo,
+       corações caindo, foto com destaque e digitação gradual.
+       Vive fora de <main> para sobrepor toda a experiência.
+       ════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <section id="aniversario-scene" hidden tabindex="-1" aria-label="Homenagem de aniversário">
+    <!-- Canvas de corações caindo — isolado de particulas.js -->
+    <canvas id="aniversario-hearts" aria-hidden="true"></canvas>
+
+    <div class="aniversario-inner">
+      <p class="aniversario-eyebrow"><span></span> FELIZ ANIVERSÁRIO <span></span></p>
+
+      <!-- Fotografia: coloque sua foto em img/aniversario.jpg
+           Se a imagem não existir, o placeholder é exibido -->
+      <div class="aniversario-photo-wrap" id="aniversario-photo-wrap">
+        <img id="aniversario-photo"
+             src="img/aniversario.jpg"
+             alt="Nossa fotografia"
+             draggable="false"
+             onerror="this.closest('.aniversario-photo-wrap').innerHTML=
+               '<div class=\'aniversario-photo-placeholder\'>' +
+               '<svg viewBox=\'0 0 24 24\'><path d=\'M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\'/></svg>' +
+               '<p>Coloque aqui a nossa fotografia</p></div>'">
+      </div>
+
+      <!-- Texto digitado gradualmente -->
+      <p class="aniversario-text" id="aniversario-text" aria-live="polite"></p>
+
+      <p class="aniversario-signoff">Com todo o meu carinho, sempre. ♡</p>
+
+      <button id="aniversario-back" class="aniversario-back" type="button">
+        ← Voltar
+      </button>
+    </div>
+  </section>
+  <!-- Fora de #opening-scene de propósito: precisa continuar clicável
+     também enquanto a tela de carregamento está ativa. -->
+  <div class="motion-toggle-wrap">
+    <button id="motion-toggle" class="motion-toggle" type="button" hidden aria-pressed="false">
+      <span class="motion-toggle-dot" aria-hidden="true"></span>
+      <span class="motion-toggle-label">Ver a carta se escrevendo</span>
+    </button>
+  </div>
+
+  <footer class="site-footer">PROJETO AMOR <span>·</span> UM SENTIMENTO EM CADA DETALHE</footer>
+
+  <!-- ═════════════════════════════════════════════════════════════════════════════════════════════════════════════
+       TELA DE CARREGAMENTO CINEMATOGRÁFICA
+       Aparece acima da experiência pública apenas quando os dados da
+       carta são válidos. O JS remove a camada ao final do cronômetro.
+       ═════════════════════════════════════════════════════════════════════════════════════════════════════════════ -->
+  <section id="loading-screen" class="loading-screen" hidden aria-label="Preparando sua carta">
+    <div class="loading-vignette" aria-hidden="true"></div>
+    <div class="loading-glow" aria-hidden="true"></div>
+
+    <div class="loading-stage">
+      <p class="loading-eyebrow"><span></span> UM MOMENTO ANTES <span></span></p>
+
+      <div class="carousel" id="loading-carousel" role="img"
+           aria-label="Galeria de lembranças em movimento circular">
+        <div class="carousel-ring" id="loading-carousel-ring">
+          <figure class="carousel-item"><img src="img/memoria/01-entardecer.svg" alt="Entardecer sobre as montanhas" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/02-ceu-estrelado.svg" alt="Céu estrelado da noite" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/03-duas-luas.svg" alt="Duas luas sobre as colinas" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/04-campo-de-flores.svg" alt="Campo de flores ao anoitecer" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/05-chuva-na-janela.svg" alt="Chuva escorrendo pela janela" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/06-cafe-quente.svg" alt="Café quente com vapor" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/07-praia-amora.svg" alt="Ondas suaves ao pôr do sol" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/08-bosque-nebuloso.svg" alt="Bosque sob a névoa" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/09-flor-de-lotus.svg" alt="Flor de lótus entre as estrelas" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/10-passaros.svg" alt="Pássaros sobre o vale" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/11-coracao-de-luz.svg" alt="Coração envolto em luz" loading="eager" decoding="async"></figure>
+          <figure class="carousel-item"><img src="img/memoria/12-noite-natal.svg" alt="Noite de inverno sobre as árvores" loading="eager" decoding="async"></figure>
+        </div>
+        <div class="carousel-floor" aria-hidden="true"></div>
+        <p class="carousel-hint" aria-hidden="true">arraste para girar</p>
+      </div>
+
+      <div class="loading-message">
+        <p class="loading-typing" id="loading-typing" aria-live="off"></p>
+      </div>
+
+      <div class="loading-footer">
+        <div class="loading-loader" aria-hidden="true">
+          <div class="loading-container">
+            <div class="loading-preloader">
+              <span class="loading-shape s1"></span>
+              <span class="loading-shape s2"></span>
+              <span class="loading-shape s3"></span>
+            </div>
+            <div class="loading-shadow"></div>
+          </div>
+        </div>
+
+        <p class="loading-status" id="loading-status">preparando tudo para você</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
